@@ -1,0 +1,134 @@
+---
+title: "Bus Delays and the Importance of Public Transit in Urban Cities"
+subtitle: ""
+author: "Cindy Ly"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  bookdown::pdf_document2:
+thanks: "Code and data are available at: https://github.com/cindykiml/TTC-Delays"
+abstract: "Toronto's public transit system, the Toronto Transit Commission (TTC), is responsible for transporting citizens throughout their cities. However, there are delays daily, hindering the ablities for civilians to arrive on time. This paper looks at the causes of bus delays during the month of January in 2021. It displays the top leading causes in order to determine how the City of Toronto can improve its transit system. Furthermore, this paper looks at relevant literature to support the need for public transit improvements and provides a survey that will ask Torontonians their experiences using the TTC. \\par\\textbf{Keywords:} TTC, public transit, delays, Toronto"
+---
+
+\pagebreak
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(repos = list(CRAN="http://cran.rstudio.com/"))
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("readr")
+install.packages("here")
+
+library(dplyr)
+library(tidyverse)
+library(readr)
+library(here)
+
+data <- read_csv(here("Inputs", "data.csv"))
+```
+
+# Introduction
+
+The Toronto Transit Commission, also known as the TTC is essential for Torontonian transportation. It offers various modes of transportation, including streetcar, train, and bus, spanning across the Greater Toronto Area (GTA). Despite this importance, many TTC users deal with countless of subway delays on a daily basis. As a result, this impedes on their ability to be on time.
+
+According to the City of Toronto, the contributing factors of TTC delays are emergency services, mechanical, vision, security, operations, investigation, cleaning, road block, general delay, and utilized off-route. The data set provided by City of Toronto's Open Data lists the reasons of bus delays during the month of January in 2021. With the data provided, I will be determining which cause has the highest frequency. I will then use this to determine what actions the City of Toronto needs to be taking in order to make public transit more reliable. Additionally, I will also draw from relevant literature to expand on the importance of having trustworthy public transit in urban cities, such as Toronto.
+
+# Data
+
+## Data Source & Implications
+
+
+
+# Methodology
+
+## Scope
+
+
+
+# Results
+
+```{r incident-data, include=FALSE}
+
+# We want to look at "Incident" occurrences so we will delete irrelevant columns
+incident_data <- select(data, -c(1:6))
+incident_data <- select(incident_data, -c(3:5))
+
+```
+
+```{r frequency-graph-code, include=FALSE}
+
+# Now, lets make a graph to see which delay incident is most common 
+graph1 <-
+  (incident_data |> 
+  ggplot(mapping = aes(x = incident)) +
+  geom_bar(width = 0.9) +
+  labs(title = "TTC Bus Delay Incidents of January 2021", 
+       x = "Incident", 
+       y = "Number of Occurences") +
+  coord_flip() +
+  geom_text(stat='count', aes(label=..count..), hjust = -0.2) +
+  theme_minimal()
+)
+
+```
+
+```{r frequency-graph, fig.cap="TTC bus delay occurences and their causes of January (2021)", echo=FALSE, fig.height=6, fig.width=8}
+graph1
+```
+
+```{r average-time, include=FALSE}
+# Let's see which incident has the longest delay time
+
+# This can be done by grouping each of the incidents and finding the mean of their delay times
+average_time <-
+  group_by(data, incident) |> 
+  summarize(m = mean(min_delay))
+
+# Round the mean time to 1 decimal place
+average_time <-
+  average_time |> 
+  mutate_if(is.numeric, round)
+```
+
+```{r time-graph-code, include=FALSE}
+graph2 <-
+  average_time |> 
+    ggplot(aes(x = incident, y = m)) +
+    geom_bar(stat = "identity", width = 0.9) +
+    labs(title = "Mean TTC Bus Delay Time of January 2021", 
+        x = "Incident", 
+        y = "Time (min)") +
+    coord_flip() +
+    geom_text(aes(label = m), hjust = -0.2) +
+    theme_minimal()
+```
+
+```{r time-graph, fig.cap="TTC bus delay incidents and their minimum mean delay times of January (2021)", echo=FALSE, fig.height=6, fig.width=8}
+graph2
+```
+```{r time-table-code, include=FALSE}
+table1 <- 
+  knitr::kable(
+  average_time,
+  "pipe",
+  col.names = c("Incident", "Delay Time (min)"),
+  align = "lc",
+  caption = "Mean TTC Bus Delay Time of January 2021"
+)
+```
+
+```{r time-table, echo=FALSE}
+table1
+```
+
+
+# Discussion
+
+# Appendix
+
+# References
+
+
+
+
+
