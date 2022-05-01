@@ -1,5 +1,5 @@
 # TTC Bus Delays and the Importance of Reliable Public Transit in Urban Cities
-Gaining insight on the causes of TTC bus delays and what can be improved.
+##Gaining insight on the causes of TTC bus delays and what can be improved.
 
 ## Overview
 Toronto's public transit system, the Toronto Transit Commission (TTC), is responsible for providing citizens with affordable and reliable transportation throughout the city. However, there are delays daily, hindering the ability for civilians to arrive on time. This paper looks at the causes of bus delays during the month of January in 2021 and the average delay time of each incident. The results show that the top leading causes of bus delays is mechanical, cleaning, operations (operator), security, and collision (TTC). These leading causes can allow us to gain more insight on how the City of Toronto can improve its transit infrastructure. Furthermore, the paper looks at relevant literature to understand the need for public transit improvements and contains a survey that will ask Torontonians about their experiences using the TTC.
@@ -10,7 +10,7 @@ This repository contains all of the files used by analyst, Cindy Ly to write a r
 The data was downloaded from the Toronto Open Data portal as an Excel Spreadsheet. Then, it was exported to a .csv file and cleaned. Clean up includess using `janitor`, renaming repetitive variable names, and removing variables that were irrelevant to my scope. My plan was to analyze which delay-causing incidents were the most common and then look at their respective mean delay times. After data processing, I then used relevant literature and reports to further understand the current issues riders face using the TTC, and the necessary actions the city needs to take.
 
 ## Survey
-Our follow-up survey can be found [here](https://forms.gle/VqyPs65oP7dBXcMj8)
+My survey can be found [here](https://forms.gle/VqyPs65oP7dBXcMj8)
 
 ## File Structure
 
