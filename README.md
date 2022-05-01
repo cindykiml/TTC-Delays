@@ -10,7 +10,7 @@ This repository contains all of the files used by analyst, Cindy Ly to write a r
 The data was downloaded from the Toronto Open Data portal as an Excel Spreadsheet. Then, it was exported to a .csv file and cleaned. Clean up includess using `janitor`, renaming repetitive variable names, and removing variables that were irrelevant to my scope. My plan was to analyze which delay-causing incidents were the most common and then look at their respective mean delay times. After data processing, I then used relevant literature and reports to further understand the current issues riders face using the TTC, and the necessary actions the city needs to take.
 
 ## Survey
-My survey can be found [here](https://forms.gle/VqyPs65oP7dBXcMj8)
+My survey can be found [here](https://forms.gle/VqyPs65oP7dBXcMj8).
 
 ## File Structure
 
@@ -28,12 +28,12 @@ ttc-bus-delay-data-readme.csv: readme file from TTC Bus Delay Data
 Contains relevant literature used in my report that was available in PDF format.
 
 ### Scripts
-The Scripts folder contains the .R script used to process the raw data
+The Scripts folder contains the .R script used to process the raw data.
 
 import_clean_data.R: code used to clean the raw data and save as a new .csv
 
 ### Outputs
-The Outputs folder contains the final products of the report
+The Outputs folder contains the final products of the report.
 
 TTC-Delays.Rmd: The R Markdown script used to create the final report
 
