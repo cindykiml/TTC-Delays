@@ -21,6 +21,7 @@ dataset.csv: cleaned dataset, used to create graphs and tables
 
 #### Raw Data Folder: 
 ttc-bus-delay-data-2021.csv: raw TTC Bus Delay Data from Toronto Open Data portal
+
 ttc-bus-delay-data-readme.csv: readme file from TTC Bus Delay Data
 
 #### Literature Folder:
