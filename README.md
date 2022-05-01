@@ -32,7 +32,7 @@ The Scripts folder contains the .R script used to process the raw data
 import_clean_data.R: code used to clean the raw data and save as a new .csv
 
 ### Outputs
-The Outputs folder contains the final products of our paper
+The Outputs folder contains the final products of the report
 
 TTC-Delays.Rmd: The R Markdown script used to create the final report
 
@@ -43,4 +43,4 @@ references.bib: References of the R packages used
 literature.bib: References of the relevant literature used
 
 #### Survey Folder:
-Contains the questions from our survey in .png format (in case the link provided fails to work).
+Contains the questions from my survey in .png format (in case the link provided fails to work).
