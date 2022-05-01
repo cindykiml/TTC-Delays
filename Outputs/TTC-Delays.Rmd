@@ -1,12 +1,13 @@
 ---
-title: "Bus Delays and the Importance of Public Transit in Urban Cities"
-subtitle: ""
+title: "TTC Bus Delays and the Importance of Reliable Public Transit in Urban Cities"
+subtitle: "Gaining insight on the causes of TTC bus delays and what can be improved."
 author: "Cindy Ly"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
   bookdown::pdf_document2:
 thanks: "Code and data are available at: https://github.com/cindykiml/TTC-Delays"
-abstract: "Toronto's public transit system, the Toronto Transit Commission (TTC), is responsible for transporting citizens throughout their cities. However, there are delays daily, hindering the ablities for civilians to arrive on time. This paper looks at the causes of bus delays during the month of January in 2021. It displays the top leading causes in order to determine how the City of Toronto can improve its transit system. Furthermore, this paper looks at relevant literature to support the need for public transit improvements and provides a survey that will ask Torontonians their experiences using the TTC. \\par\\textbf{Keywords:} TTC, public transit, delays, Toronto"
+abstract: "Toronto's public transit system, the Toronto Transit Commission (TTC), is responsible for providing citizens with affordable and reliable transportation throughout the city. However, there are delays daily, hindering the ability for civilians to arrive on time. This paper looks at the causes of bus delays during the month of January in 2021 and the average delay time of each incident. The results show that the top leading causes of bus delays is mechanical, cleaning, operations (operator), security, and collision (TTC). These leading causes can allow us to gain more insight on how the City of Toronto can improve its transit infrastructure. Furthermore, this paper looks at relevant literature to understand the need for public transit improvements and contains a survey that will ask Torontonians about their experiences using the TTC. \\par\\textbf{Keywords:} TTC, public transit, delays, Toronto"
+bibliography: [references.bib, literature.bib]
 ---
 
 \pagebreak
@@ -14,36 +15,47 @@ abstract: "Toronto's public transit system, the Toronto Transit Commission (TTC)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 options(repos = list(CRAN="http://cran.rstudio.com/"))
-install.packages("dplyr")
-install.packages("tidyverse")
-install.packages("readr")
-install.packages("here")
+#install.packages("dplyr")
+#install.packages("tidyverse")
+#install.packages("readr")
+#install.packages("here")
+#install.packages("ggplot2")
+#install.packages("bibtex")
 
 library(dplyr)
 library(tidyverse)
 library(readr)
 library(here)
+library(knitr)
+library(ggplot2)
+library(bibtex)
 
-data <- read_csv(here("Inputs", "data.csv"))
+data <- read_csv(here::here("Inputs", "dataset.csv"))
 ```
 
 # Introduction
 
-The Toronto Transit Commission, also known as the TTC is essential for Torontonian transportation. It offers various modes of transportation, including streetcar, train, and bus, spanning across the Greater Toronto Area (GTA). Despite this importance, many TTC users deal with countless of subway delays on a daily basis. As a result, this impedes on their ability to be on time.
+The Toronto Transit Commission, also known as the TTC is essential for Torontonian transportation. It offers various modes of transportation, including streetcar, train, and bus, spanning across the Greater Toronto Area (GTA). Despite this importance, many TTC users deal with countless transit delays on a daily basis. As a result, this impedes on their ability to be on time. In light of the pandemic, crowds are highly discouraged as to prevent the spread of COVID-19. However, delays lead to overcrowding on public transit and can put TTC users in precarious situations.
 
-According to the City of Toronto, the contributing factors of TTC delays are emergency services, mechanical, vision, security, operations, investigation, cleaning, road block, general delay, and utilized off-route. The data set provided by City of Toronto's Open Data lists the reasons of bus delays during the month of January in 2021. With the data provided, I will be determining which cause has the highest frequency. I will then use this to determine what actions the City of Toronto needs to be taking in order to make public transit more reliable. Additionally, I will also draw from relevant literature to expand on the importance of having trustworthy public transit in urban cities, such as Toronto.
+In cities where the cost of living is already so high, being able to travel conveniently around one's city is a keystone to increasing the quality of life. The many benefits of public transportation includes affordability, productivity, less congestion, and lower emissions (Federation of Canadian Municipalities, n.d.). Not only is public transit the backbone of livable cities, but it promotes urban sustainability as its infrastructure can last for generations. Additionally, public transportation increases accessibility to medical care, employment, education, community resources, and recreational opportunities, most of which are essential services (Federation of Canadian Municipalities, n.d.). Therefore, many individuals depend on reliable public transportation for their daily needs. This reliability and dependability is compromised when a public transit's system is prone to flow disruption (i.e. delays).
+
+According to the City of Toronto, there are approximately 15 causes of TTC delays, including but not limited to: emergency services, mechanical, vision, and security [@R-opendatatoronto]. In this paper, I use Toronto Open Data's dataset on TTC bus delays to look at the most common delay incidents. The dataset lists bus delay incidents along with their delay times for the month of January 2021. By looking at trends in bus delays, it can allow us to gain insight on what actions the City of Toronto needs to take in order to make public transit more reliable. Additionally, I will also draw from relevant literature to expand on the current issues of Toronto's transit system and the importance of having trustworthy public transit in urban cities.
 
 # Data
 
 ## Data Source & Implications
 
+The dataset used in this paper can be found on Toronto Open Data's portal. This portal was created by the City of Toronto to increase transparency, accountability, as well as digital data literacy. The dataset I used is titled "TTC Bus Delay Data". The raw data includes bus delay incident, date, route, time, location, delay time, direction (N or S), and vehicle number. 
 
+The portal provides annual bus delay data beginning from 2014 with the most recent year available being 2021. The data provided is quite extensive as there is bus delay information for each month of the year. This is helpful in case a viewer wanted to look at specific time frames. In addition, each month has over 2500 rows of bus delay information, making the data set very detailed. However, at the time that this paper is being written, only months January to August are available for the year of 2021. Perhaps this is because the complete dataset has not been updated yet. Since the data set is incomplete, it is not possible for me to look at trends from the entire year. Therefore, I will only using data from the first month of 2021 in order to view trends in TTC bus delays. Doing so has various implications when processing the data. First, the dataset is incomplete, therefore, one must be careful when using trends from this month to extrapolate to other months. Second, January is peak-Winter in Toronto. As a result, public transportation can subject to extreme weather conditions increasing bus delays. Regardless, Canadian Winters weather lasts for a large portion of the year and is something Torontonians face often on their commutes. Thus, the TTC should be built to withstand such conditions in order to serve its users. This is why I will be continuing to use this data set instead of selecting data from another month.
 
-# Methodology
+In the data set's README file, it contains a description of each variable. For example, "Incident"'s description is "The description of the delay-causing incident". This can be helpful for analysts to get a better understanding of what each variable means. However, I believe the README is not very descriptive. When looking at "Incidents", there are over 10 causes of delays. Some are more self-explanatory such as "Cleaning", and others are more vague such as "Held By". The README file could be improved by adding descriptions of what each incident means. This would allow readers to gain a deeper understanding of how incidents are categorized, as well as bus delay trends.
 
-## Scope
+## Methodology
 
+The materials used in this paper is `R` [@R], `knitr` [@R-knitr], `tidyverse` [@R-tidyverse], `ggplot2` [@R-ggplot2], `dplyr` [@R-dplyr], `janitor` [@R-janitor], `bibtex` [@R-bibtex], `readr` [@R-readr], and `here` [@R-here]. I began by downloading the Excel Spreadsheet data from Open Data Toronto [@R-opendatatoronto], then exporting it to a .csv file. After, I then cleaned it using `janitor`. Some of the incident variable names were repetitive and vague, so I renamed them for clearer understanding. I then saved this dataset as another .csv file. The data set contained variables that were irrelevant to my scope so I removed them to further clean the dataset. My plan was to analyze which incidents were the most common and then look at their respective mean delay times. 
 
+First, I created a bar graph to show the frequency of different delay incidents (Figure \@ref(fig:freq)). After, I wanted to look at the mean delay time for each incident (Figure \@ref(fig:time)). This was done by grouping the incidents together and creating a new column that calculated the mean delay time. I then created a table that summarizes the data from Figure \@ref(fig:freq) and Figure \@ref(fig:time) for easy comparison (Table \@ref(tab:sum)). Finally, I wanted to create another graph that could display my findings in a concise way. As a result, I graphed the top 5 leading causes of TTC bus delays and their mean delay times (Figure \@ref(fig:top5)).
 
 # Results
 
@@ -55,8 +67,43 @@ incident_data <- select(incident_data, -c(3:5))
 
 ```
 
-```{r frequency-graph-code, include=FALSE}
+```{r average-time, include=FALSE}
+# Let's see which incident has the longest delay time
 
+# This can be done by grouping each of the incidents and finding the mean of their delay times
+average_time <-
+  group_by(data, incident) |> 
+  dplyr::summarize(m = mean(min_delay))
+
+# Round the mean time to 1 decimal place
+average_time <-
+  average_time |> 
+  mutate_if(is.numeric, round)
+```
+
+```{r sum, echo=FALSE}
+# Let's make a table that will summarize both the occurrences of incidents and the average time delay that they cause
+
+# We need to add a column of incident frequencies to our data frame
+frequency <- plyr::count(incident_data, 'incident')
+average_time$frequency <- frequency$freq
+
+# Let's re-order the columns so it becomes more intuitive to read
+average_time <- average_time[,c(1,3,2)]
+
+table1 <- 
+  knitr::kable(
+  average_time,
+  "pipe",
+  col.names = c("Incident", "Occurences", "Average Delay Time (min)"),
+  align = "lcc",
+  caption = "Frequency of incidents causing TTC bus delays and their minimum mean delay time (min)"
+)
+
+table1
+```
+
+```{r freq, fig.cap="TTC bus delay occurences and their causing incidents of January (2021)", echo=FALSE, fig.height=7, fig.width=8}
 # Now, lets make a graph to see which delay incident is most common 
 graph1 <-
   (incident_data |> 
@@ -70,61 +117,102 @@ graph1 <-
   theme_minimal()
 )
 
-```
-
-```{r frequency-graph, fig.cap="TTC bus delay occurences and their causes of January (2021)", echo=FALSE, fig.height=6, fig.width=8}
 graph1
 ```
 
-```{r average-time, include=FALSE}
-# Let's see which incident has the longest delay time
+The most common incidents of bus delays is mechanical, cleaning, operations (operator), security, and collision (TTC). Mechanical and cleaning delays were especially the most common incidents, occurring significantly more than the others.
 
-# This can be done by grouping each of the incidents and finding the mean of their delay times
-average_time <-
-  group_by(data, incident) |> 
-  summarize(m = mean(min_delay))
-
-# Round the mean time to 1 decimal place
-average_time <-
-  average_time |> 
-  mutate_if(is.numeric, round)
-```
-
-```{r time-graph-code, include=FALSE}
+```{r time, fig.cap="TTC bus delay incidents and their minimum average delay times of January (2021)", echo=FALSE, fig.height=7, fig.width=8}
 graph2 <-
   average_time |> 
-    ggplot(aes(x = incident, y = m)) +
+    ggplot(mapping = aes(x = incident, y = m)) +
     geom_bar(stat = "identity", width = 0.9) +
-    labs(title = "Mean TTC Bus Delay Time of January 2021", 
+    labs(title = "Average TTC Bus Delay Time of January 2021", 
         x = "Incident", 
         y = "Time (min)") +
     coord_flip() +
     geom_text(aes(label = m), hjust = -0.2) +
     theme_minimal()
-```
 
-```{r time-graph, fig.cap="TTC bus delay incidents and their minimum mean delay times of January (2021)", echo=FALSE, fig.height=6, fig.width=8}
 graph2
 ```
-```{r time-table-code, include=FALSE}
-table1 <- 
-  knitr::kable(
-  average_time,
-  "pipe",
-  col.names = c("Incident", "Delay Time (min)"),
-  align = "lc",
-  caption = "Mean TTC Bus Delay Time of January 2021"
-)
+
+Incidents that cause the greatest delay times are General Delay, Collision (NON-TTC), Investigation, Held, and Diversion. Delay times were the highest for general delays, with a mean of 169 minutes or 2 hours and 49 minutes.
+
+```{r top5, fig.cap="Top 5 most common TTC bus delay incidents and their minimum average delay time in January (2021)", echo=FALSE, fig.height=4.5, fig.width=8}
+# Now let's look at the top 5 most common incidents and their delay times
+
+# We need to only view the incidents that occur the most often, so we will filter our dataset
+top5 <- average_time[-c(2, 4, 5, 6, 7, 8, 9, 10, 14, 15), ]
+
+graph3 <-
+  top5 |> 
+    ggplot(aes(x = incident, y = m)) +
+    geom_bar(stat = "identity", width = 0.6) +
+    labs(title = "Average Delay Times of the Most Common TTC Bus Delay Incidents of January 2021", 
+        x = "Incident", 
+        y = "Time (min)") +
+    geom_text(aes(label = m), vjust = -0.4) +
+    theme_minimal()
+
+graph3
 ```
 
-```{r time-table, echo=FALSE}
-table1
-```
-
+Out of the top 5 most common incidents to occur in January 2021, Operations (Operator) has longest delay duration with an average time of 19 minutes.
 
 # Discussion
 
+## Underfunding & Service Cuts
+
+As seen in Figure \@ref(fig:top5), most of the causers of delays seem to be internal. These incidents include operations (operator), cleaning, and mechanical. When these delays occur, the average time a rider has to wait for is between 13 to 19 minutes. This delay time can disrupt commute and create tension in the relationship between riders and the TTC. Cleaning is 2nd in overall frequency and is tied for 7th in average delay time. High cleaning frequency is a direct result of the pandemic. Frequent cleaning routines were established for all TTC vehicles in order to prevent COVID-19 transmission [@Zhu]. While maintaining a cleaning regimen is important for riders' safety, there is still a lack of service needed to make up for the gap in delays. Ironically, more wait times also result in larger crowds, which also puts riders at risk. 
+
+The high volume of delay-causing incidents are due to underfunding and service cuts. In their 2018 report, transit advocacy group, CodeRedTO stated that Toronto's transit system is "at risk" due to multiple reasons [@Wilson]. When compared to other North American transit systems, Toronto has the second-highest ridership for public transit but the lowest subsidy rate with no dedicated revenue sources [@CodeRedTO]. Furthermore, administration is highly politicized and there is a bias towards expansion into suburban regions rather than improving its core network [@CodeRedTO]. Therefore, instead of focusing on quality and increasing reliability, the TTC chooses to expand and increase quantity when they barely have the resources to do so. Even though its services are in high demand, there is little being done to improve or upkeep the TTC. As a result, the TTC is unable to keep up with required capital and maintenance, leading to delays and other internal issues that end up affecting users [@Wilson].
+
+## Making the Necessary Investments
+
+Cameron MacLeod, executive director of CodeRedTO stated that Toronto needs a better funding model, "to address low subsidy level and lack of dedicated revenue streams" [@CodeRedTO]. Toronto relies heavily on fare revenue to pay for service, whereas other comparable cities have a dedicated tax to fund public transit [@Wilson]. Having stable and predictable funding is essential in maintaining and improving services. Next, Toronto needs a less-politicized and resilient governance structure [@CodeRedTO]. Currently, the TTC is easily affected by political decisions; for example, in 2019, the Ford government's promise to provide $1.1 billion in funding to Toronto's transit system was reneged due to budget cuts [@Star]. This money would have gone to improving the transit system by repairing subway tracks, increasing accessibility, and overhauling buses [@Star]. Instead, the city now has to find funding from elsewhere. Political decisions as such affects the efficiency of our transit system which causes a ripple effect, impacting riders from across the network.
+
+Making meaningful investments to truly improve Toronto's public transit is something long overdue. The cost of living in Toronto is already very high, with housing becoming increasingly un-affordable for the average individual. Therefore, Toronto citizens rely on public transit as a way to economically travel throughout the city. It is generally acknowledged that the TTC is unreliable and prone to delays, which can lead citizens to becoming more dependent on car travel even though it is costly [@Zhu]. Car-dependency in urban areas lead to many problems such as safety, congestion, and pollution [@Schmocker]. In order to prevent this, the use of public transit needs to promoted and encouraged by the city. This can be accomplished having a dependable public transit system. Not only is this the key to urban sustainability, but it also fosters positive relationships between citizens and their city.
+
+\pagebreak
+
 # Appendix
+
+## Survey
+
+Survey Link: **https://forms.gle/VqyPs65oP7dBXcMj8**
+
+Survey Questions:
+
+```{r Survey1, echo=FALSE, message=FALSE, warning=FALSE, out.width= '70%'}
+knitr::include_graphics(here("Outputs", "Survey", "Survey1.png"))
+```
+
+```{r Survey2, echo=FALSE, message=FALSE, warning=FALSE, out.width= '70%'}
+knitr::include_graphics(here("Outputs", "Survey", "Survey2.png"))
+```
+
+```{r Survey3, echo=FALSE, message=FALSE, warning=FALSE, out.width= '70%'}
+knitr::include_graphics(here("Outputs", "Survey", "Survey3.png"))
+```
+
+```{r Survey4, echo=FALSE, message=FALSE, warning=FALSE, out.width= '70%'}
+knitr::include_graphics(here("Outputs", "Survey", "Survey4.png"))
+```
+
+\pagebreak
+
+```{r citations, include=FALSE}
+
+# creating a references bib file
+knitr::write_bib(c('knitr', 'readr', 'tidyverse', 'ggplot2', 'dplyr', 'janitor', 'bibtex', 'here', 'opendatatoronto'), file = 'references.bib')
+
+# adding R as a reference to the file 
+Rcite = citation()
+Rcite$key = "R"
+bibtex::write.bib(Rcite, 'references.bib', append = TRUE)
+ 
+```
 
 # References
 

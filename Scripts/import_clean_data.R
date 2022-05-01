@@ -1,5 +1,6 @@
 ## Purpose: This script will import and clean the dataset
-## Date: February 25nd, 2022
+## Date: April 25nd, 2022
+## Author: Cindy Ly
 
 install.packages("here")
 install.packages("readr")
@@ -25,4 +26,5 @@ clean_data <-
 clean_data <- clean_data |>
   mutate(incident = recode(incident, "Late Leaving Garage - Mechanical" = "Late Leave", "Late Leaving Garage - Operations" = "Late Leave", "Late Leaving Garage - Operator" =  "Late Leave", "Collision - TTC" = "Collision (TTC)", "Road Blocked - NON-TTC Collision" = "Collision (NON-TTC)", "Held By" = "Held", "Operations - Operator" = "Operations (Operator)"))
 
-write.csv(clean_data, "Inputs/data.csv")
+write.csv(clean_data, "Inputs/dataset.csv")
+
